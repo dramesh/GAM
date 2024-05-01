@@ -28,6 +28,16 @@ __author__ = 'GAM Team <google-apps-manager@googlegroups.com>'
 __version__ = '7.00.00'
 __license__ = 'Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)'
 
+import ssl
+try:
+  _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+  # Legacy Python that doesn't verify HTTPS certificates by default
+  pass
+else:
+  # Handle target environment that doesn't support HTTPS verification
+  ssl._create_default_https_context = _create_unverified_https_context
+  
 #pylint: disable=wrong-import-position
 import base64
 import calendar as calendarlib
